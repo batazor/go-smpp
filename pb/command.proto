@@ -1,0 +1,41 @@
+syntax = "proto3";
+package command;
+
+service Command {
+    // Message
+    rpc SendMessage (MessageSendRequest) returns (MessageResponse) {}
+    rpc StatusMessage (MessageIdRequest) returns (MessageResponse) {}
+    rpc HistoryMessage (MessageIdRequest) returns (MessageResponse) {}
+
+    // Worker
+    rpc AddWorker (WorkerRequest) returns (WorkerResponse) {}
+    rpc UpdateWorker (WorkerRequest) returns (WorkerResponse) {}
+    rpc DeleteWorker (WorkerRequest) returns (WorkerResponse) {}
+}
+
+message Message {
+    bytes payload = 1;
+}
+
+message MessageSendRequest {
+    string workerId = 1;
+    string msg = 2;
+}
+
+message MessageIdRequest {
+    string messageId = 1;
+}
+
+message MessageResponse {
+    repeated Message messages = 1;
+}
+
+message WorkerRequest {
+    string name = 1;
+    string addr = 2;
+    int32 port = 3;
+}
+
+message WorkerResponse {
+    bool success = 1;
+}
